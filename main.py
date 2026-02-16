@@ -1,15 +1,32 @@
+from pathlib import Path
 from fastapi import FastAPI
 from git import Repo
-import os
-from pathlib import Path
+import random
+
 app = FastAPI()
 
-path = Path(__file__)
-
-
+PROJECT_PATH = Path(__file__).parent.resolve()
 
 
 @app.post("/update")
 def update_code(data: dict):
-    print(path)
+    # Create or update test.txt inside project folder
+    file_path = PROJECT_PATH / "test.txt"
+
+    with open(file_path, "w") as f:
+        f.write(str(random.randint(1, 100)))
+
+    repo = Repo(PROJECT_PATH)
+
+    commit_message = data.get("message", "Auto commit from automation")
+
+    # git add .
+    repo.git.add(".")
+
+    # git commit -m "message"
+    repo.index.commit(commit_message)
+
+    # git push origin main
+    repo.git.push("origin", "main")
+
     return {"status": "Code updated and pushed"}
