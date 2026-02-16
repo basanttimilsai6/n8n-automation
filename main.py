@@ -9,7 +9,7 @@ PROJECT_PATH = Path(__file__).parent.resolve()
 
 
 @app.post("/update")
-def update_code(data: dict):
+def update_code():
     # Create or update test.txt inside project folder
     file_path = PROJECT_PATH / "test.txt"
 
@@ -18,7 +18,7 @@ def update_code(data: dict):
 
     repo = Repo(PROJECT_PATH)
 
-    commit_message = data.get("message", "Auto commit from automation")
+    commit_message = "Auto commit from automation"
 
     # git add .
     repo.git.add(".")
