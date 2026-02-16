@@ -8,8 +8,8 @@ app = FastAPI()
 PROJECT_PATH = Path(__file__).parent.resolve()
 
 
-@app.post("/update")
-def update_code():
+@app.get("/update")
+def auto():
     # Create or update test.txt inside project folder
     file_path = PROJECT_PATH / "test.txt"
 
